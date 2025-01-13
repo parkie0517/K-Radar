@@ -23,7 +23,7 @@ pip install torch==1.11.0 --index-url https://download.pytorch.org/whl/cu113
 ```
 pip install -r requirements.txt
 ```
-4. GCC
+5. GCC
 Run this part only if you run into GCC version error.
 ```
 # Either install a proper GCC version or create a symlink
@@ -31,26 +31,34 @@ sudo ln -s /usr/bin/gcc-8 /usr/bin/gcc
 ```
 
 
-5. Build packages for Rotated IoU
+6. Build packages for Rotated IoU
 ```
 conda install nvidia/label/cuda-11.3.1::cuda-nvcc
 cd utils/Rotated_IoU/cuda_op
 python setup.py install
 ```
 
-6. Modify the code in packages
+7. Modify the code in packages
+```
+# run python from bash
+# run the code below
+import nms
+nms
+```
+the location of the `nms` module will be printed  
+
 ```
 Add line 11: 'from .nms import rboxes' for __init__.py of nms module.
 Add line 39: 'rrect = tuple(rrect)' and comment line 41: 'print(r)' in nms.py of nms module.
 ```
 
-7. Build packages for OpenPCDet operations
+8. Build packages for OpenPCDet operations
 ```
 cd ../../../ops
 python setup.py develop
 ```
 
-8. Unzip 'kradar_revised_label_v2_0.zip' in the 'tools/revise_label' directory (For the updated labeling format, please refer to [the dataset documentation](/docs/dataset.md).)
+9. Unzip 'kradar_revised_label_v2_0.zip' in the 'tools/revise_label' directory (For the updated labeling format, please refer to [the dataset documentation](/docs/dataset.md).)
 
 We use the operations from <a href="https://github.com/open-mmlab/OpenPCDet">OpenPCDet</a> repository and acknowledge that all code in `ops` directory is sourced from there.
 To align with our project requirements, we have made several modifications to the original code and have uploaded the revised versions to our repository.
