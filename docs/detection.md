@@ -15,6 +15,9 @@ conda activate kradar
 ```
 
 3. Install PyTorch (We recommend pytorch 1.11.0.)
+```
+pip install torch==1.11.0 --index-url https://download.pytorch.org/whl/cu113
+```
 
 4. Install the dependencies
 ```
