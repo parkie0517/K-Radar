@@ -23,6 +23,13 @@ pip install torch==1.11.0 --index-url https://download.pytorch.org/whl/cu113
 ```
 pip install -r requirements.txt
 ```
+4. GCC
+Run this part only if you run into GCC version error.
+```
+# Either install a proper GCC version or create a symlink
+sudo ln -s /usr/bin/gcc-8 /usr/bin/gcc
+```
+
 
 5. Build packages for Rotated IoU
 ```

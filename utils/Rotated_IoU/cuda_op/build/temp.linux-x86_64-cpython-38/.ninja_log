@@ -1,0 +1,3 @@
+# ninja log v5
+0	31556	1736752064618888049	/home/vilab/ssd1tb/heejun/KRadar/utils/Rotated_IoU/cuda_op/build/temp.linux-x86_64-cpython-38/sort_vert.o	c65c85792274e68d
+20	16977	1736754661422133323	/home/vilab/ssd1tb/heejun/KRadar/utils/Rotated_IoU/cuda_op/build/temp.linux-x86_64-cpython-38/sort_vert_kernel.o	3420fc332d360baa
