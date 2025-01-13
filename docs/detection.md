@@ -26,6 +26,7 @@ pip install -r requirements.txt
 
 5. Build packages for Rotated IoU
 ```
+conda install nvidia/label/cuda-11.3.1::cuda-nvcc
 cd utils/Rotated_IoU/cuda_op
 python setup.py install
 ```
