@@ -81,7 +81,7 @@ python main_cond_0.py (for conditional evaluation)
 * To visualize the inference result, modify the path and run
 ```
 pip3 install sharedarray
-
+conda install conda-forge::cudatoolkit
 ```
 
 ```
