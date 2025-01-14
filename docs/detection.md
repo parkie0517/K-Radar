@@ -80,6 +80,11 @@ python main_cond_0.py (for conditional evaluation)
 
 * To visualize the inference result, modify the path and run
 ```
+pip3 install sharedarray
+
+```
+
+```
 python main_test_0.py (with code)
 python main_vis.py (with GUI)
 ```
