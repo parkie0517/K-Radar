@@ -45,7 +45,9 @@ python setup.py install
 import nms
 nms
 ```
-the location of the `nms` module will be printed  
+The location of the `nms` module will be printed.  
+Go to the location of the nms module.  
+There you can find the files that you need to edit.  
 
 ```
 Add line 11: 'from .nms import rboxes' for __init__.py of nms module.
