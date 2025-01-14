@@ -61,7 +61,7 @@ DATASET:
   }
   rdr_sparse: {
     'processed': True,
-    'dir': '/mnt/heejun_ssd/sparse_radar_tensor_wide_range/rtnh_wider_1p_1'
+    'dir': '/media/donghee/kradar/rdr_sparse_data/rtnh_wider_1p_1'
   }
   roi: {
     'filter': True,
