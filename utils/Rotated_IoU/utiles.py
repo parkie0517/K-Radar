@@ -252,7 +252,7 @@ def test_box_intersection(box1, box2):
     corners1 = box2corners(*box1)
     corners2 = box2corners(*box2)
     inters, mask = box_intersection(corners1, corners2)
-    num_inters = np.sum(mask.astype(np.int))
+    num_inters = np.sum(mask.astype(int))
     inters_lin = np.reshape(inters, (-1, 2))
     mask_lin = np.reshape(mask, (-1, ))
     inter_points = inters_lin[mask_lin, :]
