@@ -71,13 +71,16 @@ class KRadarDetection_v2_0(Dataset):
         self.rdr_sparse = self.cfg.rdr_sparse
         self.roi = self.cfg.roi
 
-        self.list_dict_item = self.load_dict_item(self.cfg.path_data, split)
+        self.list_dict_item = self.load_dict_item(self.cfg.path_data, split) # 모든 샘플 불러오기
         if cfg_from_yaml:
             self.cfg.NUM = len(self)
         
         self.collate_ver = self.cfg.get('collate_fn', 'v1_0') # Post-processing
     
     def load_dict_item(self, path_data, split):
+        """
+        Item을 하나하나 불러오는 함수
+        """
 
         def get_split(split_txt, list_dict_split, val):
             f = open(split_txt, 'r')
@@ -107,9 +110,10 @@ class KRadarDetection_v2_0(Dataset):
         list_seqs_w_header = sorted(list_seqs_w_header, key=lambda x: int(x[0]))
 
         list_dict_item = []
+        breakpoint()
         for seq, path_header in list_seqs_w_header:
             list_labels = sorted(os.listdir(osp.join(path_header, seq, 'info_label')))
-            for label in list_labels:
+            for label in list_labels: # label은 한 샘플의 GT가 들어간 정보다.
                 path_label_v1_0 = osp.join(path_header, seq, 'info_label', label)
                 path_label_v1_1 = osp.join(f'./tools/revise_label/kradar_revised_label_v1_1/{seq}_info_label_revised', label)
                 path_label_v2_0 = osp.join(f'./tools/revise_label/kradar_revised_label_v2_0', 'KRadar_refined_label_by_UWIPL', seq, label)
