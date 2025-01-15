@@ -78,6 +78,7 @@ class KRadarDetection_v2_0(Dataset):
         self.collate_ver = self.cfg.get('collate_fn', 'v1_0') # Post-processing
     
     def load_dict_item(self, path_data, split):
+
         def get_split(split_txt, list_dict_split, val):
             f = open(split_txt, 'r')
             lines = f.readlines()
@@ -85,7 +86,17 @@ class KRadarDetection_v2_0(Dataset):
             for line in lines:
                 seq, label = line.split(',')
                 list_dict_split[int(seq)][label.rstrip('\n')] = val
-        list_dict_split = [dict() for _ in range(58+1)]
+        # Initialize an empty list to hold dictionaries
+        list_dict_split = []
+
+        # Create a range of indices from 0 to 58 (inclusive)
+        for i in range(58 + 1):  # 58+1 = 59, so the range is from 0 to 58
+            # Create an empty dictionary for each index
+            empty_dict = {}
+            
+            # Append the dictionary to the list
+            list_dict_split.append(empty_dict)
+
         get_split(path_data.split[0], list_dict_split, 'train')
         get_split(path_data.split[1], list_dict_split, 'test')
         

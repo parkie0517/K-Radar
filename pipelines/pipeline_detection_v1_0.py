@@ -515,7 +515,7 @@ class PipelineDetection_v1_0():
             is_shuffle = False
             tqdm_bar = tqdm(total=len(self.dataset_test), desc='* Test (Total): ')
             log_header = 'val_tot'
-
+        
         data_loader = torch.utils.data.DataLoader(self.dataset_test, \
                 batch_size=1, shuffle=is_shuffle, collate_fn=self.dataset_test.collate_fn, \
                 num_workers = self.cfg.OPTIMIZER.NUM_WORKERS)
