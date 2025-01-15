@@ -7,6 +7,5 @@ data = np.load(file_path)
 # Print the shape and type of the data
 print(f"Shape of the data: {data.shape}")
 print(f"Data type: {data.dtype}")
-breakpoint()
 # Optionally, print the data itself
 print(data[:10])
