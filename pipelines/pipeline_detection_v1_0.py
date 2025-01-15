@@ -52,7 +52,11 @@ class PipelineDetection_v1_0():
                 set_random_seed(cfg.GENERAL.SEED)
         
         print('* K-Radar dataset is being loaded.')
-        self.dataset_train = build_dataset(self, split='train') if self.mode == 'train' else None
+        if self.mode == 'train':
+            self.dataset_train = build_dataset(self, split='train')
+        else:
+            self.dataset_train = None
+
         self.dataset_test = build_dataset(self, split='test')
         print('* The dataset is loaded.')
         if mode == 'train': # for setting scheduler
