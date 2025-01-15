@@ -6,7 +6,7 @@ from pipelines.pipeline_detection_v1_0 import PipelineDetection_v1_0
 if __name__ == '__main__':
     PATH_CONFIG = './configs/cfg_RTNH_wide.yml'
     PATH_MODEL = './pretrained/RTNH_wide_10.pt'
-    breakpoint()
+
     pline = PipelineDetection_v1_0(PATH_CONFIG, mode='test')
     pline.load_dict_model(PATH_MODEL)
     

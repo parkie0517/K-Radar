@@ -110,7 +110,6 @@ class KRadarDetection_v2_0(Dataset):
         list_seqs_w_header = sorted(list_seqs_w_header, key=lambda x: int(x[0]))
 
         list_dict_item = []
-        breakpoint()
         for seq, path_header in list_seqs_w_header:
             list_labels = sorted(os.listdir(osp.join(path_header, seq, 'info_label')))
             for label in list_labels: # label은 한 샘플의 GT가 들어간 정보다.
@@ -377,11 +376,12 @@ class KRadarDetection_v2_0(Dataset):
         return dict_item
     
     def filter_roi(self, dict_item):
+        breakpoint()
         x_min, y_min, z_min, x_max, y_max, z_max = self.roi.xyz
         list_keys = self.roi.keys
         for temp_key in list_keys:
             if temp_key in ['rdr_sparse', 'ldr64']:
-                temp_data = dict_item[temp_key]
+                temp_data = dict_item[temp_key] # temp_data가 포인트 클라우드 데이터임
                 temp_data = temp_data[np.where(
                     (temp_data[:, 0] > x_min) & (temp_data[:, 0] < x_max) &
                     (temp_data[:, 1] > y_min) & (temp_data[:, 1] < y_max) &
@@ -395,10 +395,11 @@ class KRadarDetection_v2_0(Dataset):
         return len(self.list_dict_item)
     
     def __getitem__(self, idx):
+
         dict_item = self.list_dict_item[idx]
         dict_item = self.get_label(dict_item) if not self.load_label_in_advance else dict_item
         dict_item = self.get_ldr64(dict_item) if self.item['ldr64'] else dict_item
-        dict_item = self.get_rdr_sparse(dict_item) if self.item['rdr_sparse'] else dict_item
+        dict_item = self.get_rdr_sparse(dict_item) if self.item['rdr_sparse'] else dict_item # 실제로 radar point cloud를 불러와서 dict_item에 추가하는 코드
         dict_item = self.filter_roi(dict_item) if self.roi.filter else dict_item
         dict_item = self.get_description(dict_item)
 
