@@ -3,27 +3,30 @@ import open3d as o3d
 from matplotlib import cm
 
 # Load the radar point cloud data
-root_path = "./my_util/visualize_filtered_rpc"
+root_path = "./my_util/visualize_filtered_rpc_doppler"
 rpc_after = np.load(root_path + '/rpc_after.npy')
 
-# Extract x, y, z coordinates and intensity
+# Extract x, y, z coordinates and doppler
 xyz = rpc_after[:, :3]
-intensity = rpc_after[:, 3]
+doppler = rpc_after[:, 3]
 
-# Print intensity stats for debugging
-print("Intensity Stats:")
-print(f"Min: {intensity.min()}, Max: {intensity.max()}, Mean: {intensity.mean()}")
+# Print doppler stats for debugging
+print("doppler Stats:")
+print(f"Min: {doppler.min()}, Max: {doppler.max()}, Mean: {doppler.mean()}")
 
-# Apply a logarithmic scale to the intensity values
-intensity_log = np.log1p(intensity)  # log(1 + intensity) to handle values near 0
+# Shift doppler values to make them positive
+doppler_shifted = doppler - doppler.min() + 1e-8  # Ensure all values are > 0
 
-# Normalize the log-transformed intensity to [0, 1]
-intensity_normalized = (intensity_log - intensity_log.min()) / (intensity_log.max() - intensity_log.min() + 1e-8)
+# Apply a logarithmic scale to the shifted doppler values
+doppler_log = np.log1p(doppler_shifted)  # log(1 + shifted doppler)
 
-# Map normalized intensity values to colors using a rainbow colormap
-# Use matplotlib's 'jet' colormap
+# Normalize the log-transformed doppler to [0, 1]
+doppler_normalized = (doppler_log - doppler_log.min()) / (doppler_log.max() - doppler_log.min() + 1e-8)
+
+
+# Map normalized doppler values to colors using a rainbow colormap
 colormap = cm.get_cmap('plasma')  # You can also try 'viridis' or others
-colors = colormap(intensity_normalized)[:, :3]  # Extract RGB values (ignore alpha)
+colors = colormap(doppler_normalized)[:, :3]  # Extract RGB values (ignore alpha)
 
 # Create an Open3D PointCloud object
 pcd = o3d.geometry.PointCloud()
@@ -36,7 +39,7 @@ pcd.colors = o3d.utility.Vector3dVector(colors)
 
 # Visualize the point cloud
 o3d.visualization.draw_geometries([pcd],
-                                  window_name="Radar Point Cloud with Rainbow Intensity",
+                                  window_name="Radar Point Cloud with Rainbow doppler",
                                   width=800,
                                   height=600,
                                   left=50,
