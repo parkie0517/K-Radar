@@ -22,5 +22,5 @@ def convert_5D_to_4D(input_file, output_file):
 
 # Example usage
 input_file = '/mnt/heejun_ssd/rtnh_wider_1p_1_doppler/13/rdr_sparse_doppler_00069.npy'
-output_file = './KRadar/my_util/visualize_filtered_rpc-doppler/rpc_before.npy'
+output_file = './my_util/visualize_filtered_rpc_doppler/rpc_before.npy'
 convert_5D_to_4D(input_file, output_file)
