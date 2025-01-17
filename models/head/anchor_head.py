@@ -346,12 +346,14 @@ class AnchorHeadSingle(nn.Module):
     
     def forward(self, data_dict):
         data_dict['gt_boxes'] = data_dict['gt_boxes'].cuda()
-        spatial_features_2d = data_dict[self.key_features]
+        spatial_features_2d = data_dict[self.key_features] # (B, 768, 80, 180) 크기인 concatenated feature map
         # spatial_features_2d = data_dict['bev_feat']
         # spatial_features_2d = data_dict['spatial_features_2d']
 
-        cls_preds = self.conv_cls(spatial_features_2d)
-        box_preds = self.conv_box(spatial_features_2d)
+        
+        # print(self.num_anchors_per_location) # to check how many anchors are there
+        cls_preds = self.conv_cls(spatial_features_2d) # there are 2 classes. and 4 anchors per location. Therefore 8 channels
+        box_preds = self.conv_box(spatial_features_2d) # 4 anchors per location. and each anchor consists of 7 values
 
         cls_preds = cls_preds.permute(0, 2, 3, 1).contiguous()  # [N, H, W, C]
         box_preds = box_preds.permute(0, 2, 3, 1).contiguous()  # [N, H, W, C]
@@ -359,8 +361,8 @@ class AnchorHeadSingle(nn.Module):
         self.forward_ret_dict['cls_preds'] = cls_preds
         self.forward_ret_dict['box_preds'] = box_preds
 
-        if self.conv_dir_cls is not None:
-            dir_cls_preds = self.conv_dir_cls(spatial_features_2d)
+        if self.conv_dir_cls is not None: # direction도 예측해야 하는 경우
+            dir_cls_preds = self.conv_dir_cls(spatial_features_2d) # 한 지점 4 x 2개 방향 = 8개 값 출력
             dir_cls_preds = dir_cls_preds.permute(0, 2, 3, 1).contiguous()
             self.forward_ret_dict['dir_cls_preds'] = dir_cls_preds
         else:
@@ -379,7 +381,7 @@ class AnchorHeadSingle(nn.Module):
             )
             data_dict['batch_cls_preds'] = batch_cls_preds
             data_dict['batch_box_preds'] = batch_box_preds
-            data_dict['cls_preds_normalized'] = False
+            data_dict['cls_preds_normalized'] = False # 아직 softmax 같은 거 안 취해진 상태이므로 False다.
 
             data_dict = self.post_processing(data_dict)
 
