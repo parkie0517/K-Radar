@@ -26,6 +26,7 @@ doppler_normalized = (doppler_log - doppler_log.min()) / (doppler_log.max() - do
 
 # Map normalized doppler values to colors using a rainbow colormap
 colormap = cm.get_cmap('plasma')  # You can also try 'viridis' or others
+
 colors = colormap(doppler_normalized)[:, :3]  # Extract RGB values (ignore alpha)
 
 # Create an Open3D PointCloud object
