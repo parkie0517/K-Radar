@@ -110,7 +110,7 @@ class RadarSparseBackbone(nn.Module):
             spatial_shape=self.spatial_shape,
             batch_size=dict_item['batch_size']
         )
-        x = self.input_conv(input_sp_tensor)
+        x = self.input_conv(input_sp_tensor) # input and output are SparseConvTensor
 
         # print(x.dense().shape)
 

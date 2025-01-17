@@ -395,7 +395,7 @@ class KRadarDetection_v2_0(Dataset):
         return len(self.list_dict_item)
     
     def __getitem__(self, idx):
-        breakpoint()
+
         dict_item = self.list_dict_item[idx]
         dict_item = self.get_label(dict_item) if not self.load_label_in_advance else dict_item
         dict_item = self.get_ldr64(dict_item) if self.item['ldr64'] else dict_item

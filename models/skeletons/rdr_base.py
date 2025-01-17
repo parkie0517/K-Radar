@@ -53,6 +53,8 @@ class RadarBase(nn.Module):
         return head_module
 
     def forward(self, x):
+        # kradar 기본 모델로 실행하면 요기 실행됨
+        breakpoint()
         for module in self.list_modules:
             x = module(x)
         return x

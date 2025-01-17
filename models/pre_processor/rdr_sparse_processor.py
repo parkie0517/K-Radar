@@ -64,7 +64,7 @@ class RadarSparseProcessor(nn.Module):
 
     def forward(self, dict_item):
         if self.cfg_dataset_ver2:
-            rdr_sparse = dict_item['rdr_sparse'].cuda()
+            rdr_sparse = dict_item['rdr_sparse'].cuda() # (N, 4) -> x,y,z,intensity
             batch_indices = dict_item['batch_indices_rdr_sparse'].cuda()
 
             batch_voxel_features, batch_voxel_coords, batch_num_pts_in_voxels = [], [], []

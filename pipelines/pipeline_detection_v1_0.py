@@ -806,7 +806,7 @@ class PipelineDetection_v1_0():
         for idx_datum, dict_datum in enumerate(data_loader):
             if is_subset & (idx_datum >= self.val_num_subset):
                 break
-
+            breakpoint() # for checking how the model works
             try:
                 dict_out = self.network(dict_datum) # inference
                 is_feature_inferenced = True
