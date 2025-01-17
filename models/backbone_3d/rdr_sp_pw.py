@@ -118,30 +118,30 @@ class RadarSparseBackbone(nn.Module):
 
         for idx_layer in range(self.num_layer):
             # print(idx_layer)
-            x = getattr(self, f'spconv{idx_layer}')(x)
+            x = getattr(self, f'spconv{idx_layer}')(x) # SparseConv3d
             x = x.replace_feature(getattr(self, f'bn{idx_layer}')(x.features))
             x = x.replace_feature(self.relu(x.features))
-            x = getattr(self, f'subm{idx_layer}a')(x)
+            x = getattr(self, f'subm{idx_layer}a')(x) # SubMConv3d
             x = x.replace_feature(getattr(self, f'bn{idx_layer}a')(x.features))
             x = x.replace_feature(self.relu(x.features))
             x = getattr(self, f'subm{idx_layer}b')(x)
             x = x.replace_feature(getattr(self, f'bn{idx_layer}b')(x.features))
-            x = x.replace_feature(self.relu(x.features))
+            x = x.replace_feature(self.relu(x.features)) # x의 height는 24다.
             # print(x.dense().shape)
 
             if self.is_z_embed:
                 bev_dense = getattr(self, f'chzcat{idx_layer}')(x.dense())
                 bev_dense = getattr(self, f'convtrans2d{idx_layer}')(bev_dense)
             else:
-                bev_sp = getattr(self, f'toBEV{idx_layer}')(x)
+                bev_sp = getattr(self, f'toBEV{idx_layer}')(x) # sparse conv 3D (요기서 커널은 (24, 1, 1)이다. 그래서 BEV로 줄일 수 있다.)
                 bev_sp = bev_sp.replace_feature(getattr(self, f'bnBEV{idx_layer}')(bev_sp.features))
                 bev_sp = bev_sp.replace_feature(self.relu(bev_sp.features))
                 # print(bev_sp.dense().shape)
 
                 # B, C, 1, Y/st, X/st -> B, C, Y, X
-                bev_dense = getattr(self, f'convtrans2d{idx_layer}')(bev_sp.dense().squeeze(2))
+                bev_dense = getattr(self, f'convtrans2d{idx_layer}')(bev_sp.dense().squeeze(2)) # ConvTranspose2d
             
-            bev_dense = getattr(self, f'bnt{idx_layer}')(bev_dense)
+            bev_dense = getattr(self, f'bnt{idx_layer}')(bev_dense) # batchnorm2D
             bev_dense = self.relu(bev_dense)
 
             list_bev_features.append(bev_dense)
